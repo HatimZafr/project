@@ -3,7 +3,7 @@
 // Token bot Telegram
 $botToken = '7052133522:AAGG8gq2TiH54hhsHCwfqu8XjhklAlmNV30';
 
-// URL API untuk membuat sertifika
+// URL API untuk membuat sertifikat
 $apiUrl = 'https://karyakita.infinityfreeapp.com/raya1.html?teks=';
 
 // Fungsi untuk mengirim pesan ke bot Telegram
@@ -17,16 +17,20 @@ function sendMessage($chatId, $message) {
 function sendCertificate($chatId, $name) {
     global $apiUrl;
     $certificateUrl = $apiUrl . urlencode($name);
-    // Mendownload sertifikat dari URL
+    // Mengambil gambar sertifikat dari URL
     $image = file_get_contents($certificateUrl);
     // Mengirim gambar sebagai file ke bot Telegram
     $url = "https://api.telegram.org/bot$botToken/sendPhoto";
-    $postFields = array('chat_id' => $chatId, 'photo' => $image);
+    // Simpan gambar sertifikat dengan nama certificate.png
+    file_put_contents("certificate.png", $image);
+    // Membuka file gambar sertifikat
+    $certificateFile = new CURLFile(realpath("certificate.png"));
+    $postFields = array('chat_id' => $chatId, 'photo' => $certificateFile);
     $ch = curl_init();
-    curl_setopt($ch, CURLOPT_HTTPHEADER, array("Content-Type:multipart/form-data"));
     curl_setopt($ch, CURLOPT_URL, $url);
-    curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+    curl_setopt($ch, CURLOPT_POST, 1);
     curl_setopt($ch, CURLOPT_POSTFIELDS, $postFields);
+    curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
     $output = curl_exec($ch);
     curl_close($ch);
 }

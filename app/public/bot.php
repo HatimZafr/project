@@ -3,11 +3,11 @@
 define('BOT_TOKEN', '7052133522:AAGG8gq2TiH54hhsHCwfqu8XjhklAlmNV30');
 
 // Fungsi untuk mengirim pesan dengan gambar ke Telegram
-function sendCertificate($chat_id, $certificate_file) {
+function sendPhoto($chat_id, $photo) {
     $url = 'https://api.telegram.org/bot' . BOT_TOKEN . '/sendPhoto';
     $post_fields = array(
         'chat_id'   => $chat_id,
-        'photo'     => new CURLFile(realpath($certificate_file))
+        'photo'     => new CURLFile($photo)
     );
 
     $ch = curl_init();
@@ -47,25 +47,6 @@ function generateCertificate($name) {
     return $certificate_file;
 }
 
-// Fungsi untuk mengirim pesan permintaan nama
-function askForName($chat_id) {
-    $url = 'https://api.telegram.org/bot' . BOT_TOKEN . '/sendMessage';
-    $post_fields = array(
-        'chat_id'   => $chat_id,
-        'text'      => 'Masukkan nama Anda untuk sertifikat:'
-    );
-
-    $ch = curl_init();
-    curl_setopt($ch, CURLOPT_HTTPHEADER, array("Content-Type:application/json"));
-    curl_setopt($ch, CURLOPT_URL, $url);
-    curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
-    curl_setopt($ch, CURLOPT_POST, 1);
-    curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($post_fields));
-    $output = curl_exec($ch);
-    curl_close($ch);
-    return $output;
-}
-
 // Ambil data dari webhook
 $update = json_decode(file_get_contents('php://input'), true);
 
@@ -79,15 +60,19 @@ if (isset($update['message'])) {
 
         // Jika pengguna mengirim nama, buat sertifikat dan kirim
         if (strpos($text, '/start') !== false) {
-            askForName($chat_id);
+            // Meminta pengguna untuk memasukkan nama
+            $message = 'Masukkan nama Anda untuk sertifikat:';
+            file_get_contents("https://api.telegram.org/bot" . BOT_TOKEN . "/sendMessage?chat_id=" . $chat_id . "&text=" . $message);
         } else {
+            // Buat sertifikat dengan nama yang diberikan
             $certificate_file = generateCertificate($text);
-            sendCertificate($chat_id, $certificate_file);
+
+            // Kirim sertifikat ke pengguna
+            sendPhoto($chat_id, $certificate_file);
+
+            // Hapus sertifikat setelah dikirim
             unlink($certificate_file);
         }
-    } else {
-        // Jika bukan teks, tanyakan kembali nama
-        askForName($chat_id);
     }
 }
 

@@ -3,7 +3,7 @@
 // Token bot Telegram
 $botToken = '7052133522:AAGG8gq2TiH54hhsHCwfqu8XjhklAlmNV30';
 
-// URL API untuk membuat sertifikat
+// URL API untuk membuat sertifika
 $apiUrl = 'https://karyakita.infinityfreeapp.com/raya1.html?teks=';
 
 // Fungsi untuk mengirim pesan ke bot Telegram

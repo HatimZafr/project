@@ -1,7 +1,7 @@
 <?php
 
 // Token bot dari BotFather
-$botToken = "YOUR_BOT_TOKEN";
+$botToken = "7052133522:AAGG8gq2TiH54hhsHCwfqu8XjhklAlmNV30";
 
 // Mendapatkan data yang dikirimkan ke bot
 $update = json_decode(file_get_contents("php://input"), true);

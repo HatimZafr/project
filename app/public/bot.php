@@ -1,34 +1,27 @@
 <?php
 
-// Token bot dari BotFather
-$botToken = "7052133522:AAGG8gq2TiH54hhsHCwfqu8XjhklAlmNV30";
+// Ganti 'TOKEN_BOT_ANDA' dengan token bot Telegram Anda
+define('TOKEN', '7052133522:AAGG8gq2TiH54hhsHCwfqu8XjhklAlmNV30');
+define('API_URL', 'https://api.telegram.org/bot'.TOKEN.'/');
 
-// Mendapatkan data yang dikirimkan ke bot
-$update = json_decode(file_get_contents("php://input"), true);
+// Mendapatkan update dari Telegram
+$update = json_decode(file_get_contents('php://input'), true);
 
-// Mendapatkan id chat dan teks yang dikirimkan
-$chatID = $update["message"]["chat"]["id"];
-$message = $update["message"]["text"];
+// Pesan yang diterima dari pengguna
+$message = $update['message'];
 
-// Membuat daftar respons sesuai dengan perintah
-$responses = array(
-    "/start" => "Halo! Selamat datang di bot sederhana.",
-    "/help" => "Bot ini memiliki fungsi yang sangat sederhana. Anda bisa mencoba kirim /start untuk memulai atau /help untuk melihat bantuan.",
-    "hello" => "Halo! Apa kabar?",
-    "bye" => "Selamat tinggal! Sampai jumpa lagi."
-);
+// ID pengirim pesan
+$chat_id = $message['chat']['id'];
 
-// Mengirimkan respons berdasarkan teks yang diterima
-if(isset($responses[$message])){
-    sendMessage($chatID, $responses[$message]);
+// Isi pesan yang diterima
+$text = $message['text'];
+
+// Menangani perintah "/start"
+if ($text == '/start') {
+    $response = 'Halo! Saya adalah bot sederhana. Silakan kirimkan pesan kepada saya.';
 } else {
-    sendMessage($chatID, "Maaf, saya tidak mengerti pesan Anda.");
+    $response = 'Terima kasih atas pesan Anda: '.$text;
 }
 
-// Fungsi untuk mengirim pesan ke bot API Telegram
-function sendMessage($chatID, $message){
-    global $botToken;
-    $url = "https://api.telegram.org/bot$botToken/sendMessage?chat_id=$chatID&text=".urlencode($message);
-    file_get_contents($url);
-}
-?>
+// Mengirimkan balasan ke pengguna
+file_get_contents(API_URL.'sendmessage?chat_id='.$chat_id.'&text='.$response);

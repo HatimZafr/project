@@ -79,7 +79,7 @@ if (!empty($data->query) && !empty($data->appPackageName) && !empty($data->messe
     if (is_array($result)) {
         
         $response = $result["lokasi"] . " - " . $result["daerah"] . "\n";
-        $response .= "• Subuh: " . $result["subuh"] . "\n";
+        $response .= "• Shubuh: " . $result["subuh"] . "\n";
         $response .= "• Terbit: " . $result["terbit"] . "\n";
         $response .= "• Dhuha: " . $result["dhuha"] . "\n";
         $response .= "• Dzuhur: " . $result["dzuhur"] . "\n";

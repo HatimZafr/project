@@ -57,6 +57,7 @@ if (!empty($data->query) && !empty($data->appPackageName) && !empty($data->messe
             $message = trim(substr($message, strlen($command)));
             $result = getSholatResponse($message);
             if (is_array($result)) {
+                $response .= "Waktu Shalat\n";
                 $response = $result["lokasi"] . " - " . $result["daerah"] . "\n";
                 $response .= "• Subuh: " . $result["jadwal"]["subuh"] . "\n";
                 $response .= "• Terbit: " . $result["jadwal"]["terbit"] . "\n";
@@ -76,7 +77,6 @@ if (!empty($data->query) && !empty($data->appPackageName) && !empty($data->messe
 
     $result = getSholatResponse($message);
     if (is_array($result)) {
-        $response .= "Waktu Shalat\n";
         $response = $result["lokasi"] . " - " . $result["daerah"] . "\n";
         $response .= "• Subuh: " . $result["subuh"] . "\n";
         $response .= "• Terbit: " . $result["terbit"] . "\n";

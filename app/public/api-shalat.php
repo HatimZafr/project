@@ -86,7 +86,7 @@ if (!empty($data->query) && !empty($data->appPackageName) && !empty($data->messe
         $response .= "• Ashar: " . $result["ashar"] . "\n";
         $response .= "• Maghrib: " . $result["maghrib"] . "\n";
         $response .= "• Isya: " . $result["isya"] . "\n";
-        $response = "Barakallahu Fiikum";
+        
     } else {
         $response = $result;
     }

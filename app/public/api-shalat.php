@@ -65,7 +65,7 @@ if (!empty($data->query) && !empty($data->appPackageName) && !empty($data->messe
                 $response .= "• Ashar: " . $result["jadwal"]["ashar"] . "\n";
                 $response .= "• Maghrib: " . $result["jadwal"]["maghrib"] . "\n";
                 $response .= "• Isya: " . $result["jadwal"]["isya"] . "\n";
-                 $response = "Barakallahu Fiikum";
+                 
             } else {
                 $response = $result;
             }
@@ -86,6 +86,7 @@ if (!empty($data->query) && !empty($data->appPackageName) && !empty($data->messe
         $response .= "• Ashar: " . $result["ashar"] . "\n";
         $response .= "• Maghrib: " . $result["maghrib"] . "\n";
         $response .= "• Isya: " . $result["isya"] . "\n";
+        $response = "Barakallahu Fiikum";
     } else {
         $response = $result;
     }

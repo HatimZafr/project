@@ -3,7 +3,6 @@
 // Don't disturb
 require __DIR__ . "/../../vendor/autoload.php";
 
-
 // Required headers
 header("Access-Control-Allow-Origin: *");
 header("Content-Type: application/json; charset=UTF-8");
@@ -57,8 +56,8 @@ if (!empty($data->query) && !empty($data->appPackageName) && !empty($data->messe
             $message = trim(substr($message, strlen($command)));
             $result = getSholatResponse($message);
             if (is_array($result)) {
-                
                 $response = $result["lokasi"] . " - " . $result["daerah"] . "\n";
+                $response .= "• Imsak: " . $result["jadwal"]["imsak"] . "\n";
                 $response .= "• Subuh: " . $result["jadwal"]["subuh"] . "\n";
                 $response .= "• Terbit: " . $result["jadwal"]["terbit"] . "\n";
                 $response .= "• Dhuha: " . $result["jadwal"]["dhuha"] . "\n";
@@ -66,6 +65,7 @@ if (!empty($data->query) && !empty($data->appPackageName) && !empty($data->messe
                 $response .= "• Ashar: " . $result["jadwal"]["ashar"] . "\n";
                 $response .= "• Maghrib: " . $result["jadwal"]["maghrib"] . "\n";
                 $response .= "• Isya: " . $result["jadwal"]["isya"] . "\n";
+                 $response = "Barakallahu Fiikum";
             } else {
                 $response = $result;
             }
@@ -77,8 +77,8 @@ if (!empty($data->query) && !empty($data->appPackageName) && !empty($data->messe
 
     $result = getSholatResponse($message);
     if (is_array($result)) {
-        
         $response = $result["lokasi"] . " - " . $result["daerah"] . "\n";
+        $response .= "• Imsak: " . $result["imsak"] . "\n";
         $response .= "• Subuh: " . $result["subuh"] . "\n";
         $response .= "• Terbit: " . $result["terbit"] . "\n";
         $response .= "• Dhuha: " . $result["dhuha"] . "\n";
